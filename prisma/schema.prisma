@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Doctor {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  password      String
+  specilization String
+  Licensenum    String
+  createdAt     DateTime       @default(now())
+  availability  Availability[]
+  appointments  Appointment[]
+  Hospital      Hospital?      @relation(fields: [hospitalId], references: [id])
+  hospitalId    String?
+}
+
+model Patient {
+  id           String        @id @default(uuid())
+  name         String
+  email        String        @unique
+  password     String?
+  phone        String
+  createdAt    DateTime      @default(now())
+  appointments Appointment[]
+}
+
+model Hospital {
+  id        String   @id @default(uuid())
+  email     String    @unique
+  password  String?   
+  name      String
+  address   String
+  phone     String
+  createdAt DateTime @default(now())
+  doctors   Doctor[]
+}
+
+model Appointment {
+  id        String      @id @default(uuid())
+  date      DateTime
+  type      BookingType
+  doctorId  String
+  patientId String
+  createdAt DateTime    @default(now())
+  doctor    Doctor      @relation(fields: [doctorId], references: [id])
+  patient   Patient     @relation(fields: [patientId], references: [id])
+}
+
+model Availability {
+  id        String   @id @default(uuid())
+  dayOfWeek Int
+  startTime DateTime
+  endTime   DateTime
+  doctorId  String
+  doctor    Doctor   @relation(fields: [doctorId], references: [id])
+}
+
+enum BookingType {
+  IN_PERSON
+  PHONE
+  ONLINE
+}
