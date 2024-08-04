@@ -7,4 +7,4 @@ services:
     startCommand: npm run start:prod
     envVars:
       - key: DATABASE_URL
-        value: your_render_database_url
+        value: postgresql://healthnexus_user:2soIvojaMf9pTQR7nJdPOv6OMNCwlq0A@dpg-cqnvl1rv2p9s73aidj10-a/healthnexus
