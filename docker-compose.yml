@@ -1,23 +1,20 @@
 version: '3.8'
 
 services:
-
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - dev-db
+    environment:
+      DATABASE_URL: "postgresql://healthnexus_user:2soIvojaMf9pTQR7nJdPOv6OMNCwlq0A@dpg-cqnvl1rv2p9s73aidj10-a.oregon-postgres.render.com/healthnexus"
 
   dev-db:
     image: postgres:13
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
+      POSTGRES_USER: healthnexus_user
+      POSTGRES_PASSWORD: 2soIvojaMf9pTQR7nJdPOv6OMNCwlq0A
+      POSTGRES_DB: healthnexus
     ports:
-      - "5342:5432"
-
-  test:
-    image: node:16
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    working_dir: /usr/src/app
-    command: sh -c "npm install && npm test"
-    environment:
-      - NODE_ENV=test
+      - "5432:5432"
