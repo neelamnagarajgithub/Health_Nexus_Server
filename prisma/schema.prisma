@@ -18,7 +18,7 @@ model Doctor {
   name          String
   email         String         @unique
   password      String
-   phone        String
+  phone         String
   specilization String
   Licensenum    String
   createdAt     DateTime       @default(now())
@@ -40,8 +40,8 @@ model Patient {
 
 model Hospital {
   id        String   @id @default(uuid())
-  email     String    @unique
-  password  String?   
+  email     String   @unique
+  password  String?
   name      String
   address   String
   phone     String
@@ -50,17 +50,17 @@ model Hospital {
 }
 
 model Appointment {
-  id        String      @id @default(uuid())
-  startTime     DateTime
-  endTime      DateTime
-  type      BookingType
-  doctorId  String
-  patientId String
-  createdAt DateTime    @default(now())
-  doctor    Doctor      @relation(fields: [doctorId], references: [id])
-  patient   Patient     @relation(fields: [patientId], references: [id])
-  amountpaid  Boolean?
-  amount Int?
+  id         String      @id @default(uuid())
+  startTime  DateTime
+  endTime    DateTime
+  type       BookingType
+  doctorId   String
+  patientId  String
+  createdAt  DateTime    @default(now())
+  doctor     Doctor      @relation(fields: [doctorId], references: [id])
+  patient    Patient     @relation(fields: [patientId], references: [id])
+  amountpaid Boolean?
+  amount     Int?
 }
 
 model Availability {
