@@ -7,7 +7,7 @@ export class AppointmentsService {
   constructor(private readonly prisma:PrismaClient){}
 
   async create(dto:AppointDto){
-   const new_appoint=await this.prisma.appointment.create({
+   const new_appointment=await this.prisma.appointment.create({
     data:{
         startTime: dto.date_from,
         endTime:dto.date_to,
@@ -16,6 +16,6 @@ export class AppointmentsService {
         patientId: dto.patientId,
       },
     });
-    return new_appoint;
+    return new_appointment;
   }
 }
