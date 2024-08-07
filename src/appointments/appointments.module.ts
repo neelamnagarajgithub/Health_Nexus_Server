@@ -5,7 +5,7 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 import { PrismaClient } from '@prisma/client';
 
 @Module({
-  imports:[PrismaModule,PrismaClient],
+  imports:[PrismaModule],
   controllers: [AppointmentsController],
   providers: [AppointmentsService,PrismaClient]
 })
