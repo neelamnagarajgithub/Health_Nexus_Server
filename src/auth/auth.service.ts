@@ -2,17 +2,20 @@ import { Injectable ,NotFoundException} from '@nestjs/common';
 import { AuthDto, LoginDto } from './dto';
 
 import { PrismaService } from 'src/prisma/prisma.service';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly prisma: PrismaService) {}
     async signup(dto:AuthDto){
+        const hashedPassword = await argon2.hash(dto.password);
         if(dto.Role=='doc'){
            const newdoc= await this.prisma.doctor.create({
                 data:{
                     name:dto.name,
                     email:dto.email,
-                    password:dto.password,
+                    password:hashedPassword,
+                    phone:dto.phone,
                     specilization:dto.specilization,
                     Licensenum:dto.Licensenum,
                 }

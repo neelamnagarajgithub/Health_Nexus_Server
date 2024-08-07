@@ -27,7 +27,7 @@ export class PatientsController {
         return this.patientService.updatedetails(param.id,updatedto);
     }
 
-    @Delete('id')
+    @Delete(':id')
     deleteuser(@Param() param:any) {
         return this.patientService.deleteuser(param.id);
     }

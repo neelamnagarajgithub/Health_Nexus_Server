@@ -17,11 +17,12 @@ export class PatientsService {
     }
 
     async appointments(id:string) {
-        return await this.prisma.appointment.findMany({
+        const appointment= await this.prisma.appointment.findMany({
             where:{
                 patientId:id,
             }
         })
+        return appointment;
     }
 
     async MyEMRs(id:string){
