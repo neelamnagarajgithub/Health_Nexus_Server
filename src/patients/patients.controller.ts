@@ -7,20 +7,14 @@ export class PatientsController {
     constructor(private patientService:PatientsService){}
 
     @Get(':id')
-    profile(@Param() param:any ){
-        return this.patientService.getprofile(param.id);
-    }
-
-    @Get('myemr/:id')
-    myemrs(@Param() param:any) {
-        return this.patientService.MyEMRs(param.id)
-
-    }
-
-    @Get('my_appointments/:id')
-    appointments(@Param() param:any ) {
-        return this.patientService.appointments(param.id);
-    }
+  async dashboard(@Param() param: any) {
+    const [profile, appointments, emrs] = await Promise.all([
+      this.patientService.getprofile(param.id),
+      this.patientService.appointments(param.id),
+      this.patientService.MyEMRs(param.id),
+    ]);
+    return { profile, appointments, emrs };
+  }
 
     @Put(':id')
     updateDetails(@Param() param:any,@Body() updatedto:UpdatedDto){
