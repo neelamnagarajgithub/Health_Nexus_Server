@@ -11,11 +11,6 @@ export class AppointmentsController {
         return this.appointService.alldocs();
     }
 
-    @Post()
-    predict_doctor(){
-        
-    }
-
     @Post('new/:id')
     create(@Body() dto:AppointDto,@Param() id:string){
         return this.appointService.create(dto,id);

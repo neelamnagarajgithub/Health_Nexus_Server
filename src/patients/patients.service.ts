@@ -33,14 +33,13 @@ export class PatientsService {
                 id:id
             }
         })
-        console.log(user)
         if (!user) {
             throw new Error('User not found');
           }
           try {
             const response = await axios.get(`https://medivault-server.onrender.com/api/v1/user/${user.email}`);
             const data = response.data; 
-            console.log('Data from medivault-server:', data);
+            
           
             const response2 = await axios.post('https://healthnexus-model.onrender.com/predict', JSON.stringify(data), {
               headers: {
@@ -49,7 +48,13 @@ export class PatientsService {
             });
           
             const data2 = response2.data;
-            return data2;
+            const resp=await this.prisma.doctor.findMany({
+                where:{
+                    specilization:  data2.specialty
+                }
+            })
+            console.log("Doctors sent successfully");
+            return resp;
           } catch (error) {
             if (error.response) {
               // The request was made and the server responded with a status code
