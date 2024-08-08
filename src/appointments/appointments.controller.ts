@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Put, Post, Delete } from '@nestjs/common';
+import { Body, Controller, Param, Put, Post, Delete, Get } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { AppointDto, rescheduleDto } from './dto';
 
@@ -6,10 +6,16 @@ import { AppointDto, rescheduleDto } from './dto';
 export class AppointmentsController {
     constructor(private appointService:AppointmentsService){}
 
-    @Post('new')
-    create(@Body() dto:AppointDto){
-        return this.appointService.create(dto);
+    @Get('alldoc')
+    alldocs(){
+        return this.appointService.alldocs();
     }
+
+    @Post('new/:id')
+    create(@Body() dto:AppointDto,@Param() id:string){
+        return this.appointService.create(dto,id);
+    }
+     
 
     @Put(':id')
     reschedule(@Param() param:any,@Body() updateddto:rescheduleDto){

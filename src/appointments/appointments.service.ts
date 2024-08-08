@@ -7,7 +7,7 @@ import { rescheduleDto } from './dto';
 export class AppointmentsService {
   constructor(private readonly prisma:PrismaClient){}
 
-  async create(dto:AppointDto){
+  async create(dto:AppointDto,id:string){
    const new_appointment=await this.prisma.appointment.create({
     data:{
       startTime: dto.date_from,
@@ -20,6 +20,10 @@ export class AppointmentsService {
     return new_appointment;
   }
 
+  async alldocs(){
+    const alldoc=await this.prisma.doctor.findMany();
+    return alldoc;
+  }
   async reschedule(id:string,updateddto:rescheduleDto){
     const appoin=await this.prisma.appointment.update({
       where:{
