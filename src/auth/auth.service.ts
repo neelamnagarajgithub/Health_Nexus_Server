@@ -50,19 +50,16 @@ export class AuthService {
         const c1=await this.prisma.doctor.findUnique({
                 where:{
                     email:dto.email,
-                    password:dto.password
                 }
         })
-        const c2=await this.prisma.hospital.findUnique({
+        const c2=await this.prisma.patient.findUnique({
                 where:{
                     email:dto.email,
-                    password:dto.password
                 }
         })
         const c3=await this.prisma.hospital.findUnique({
                 where:{
                     email:dto.email,
-                    password:dto.password
                 }
         })
        if(c1!=null){return c1;}
