@@ -8,13 +8,18 @@ export class PatientsController {
 
     @Get(':id')
   async dashboard(@Param() param: any) {
-    const [profile, appointments, emrs] = await Promise.all([
+    const [profile, appointments] = await Promise.all([
       this.patientService.getprofile(param.id),
       this.patientService.appointments(param.id),
-      this.patientService.MyEMRs(param.id),
     ]);
-    return { profile, appointments, emrs };
+    return { profile, appointments };
   }
+    @Get('predict_doc/:id')
+    predictdocs(@Param() param:any){
+     return this.patientService.predicteddocs(param.id)
+    }
+   
+
 
     @Put(':id')
     updateDetails(@Param() param:any,@Body() updatedto:UpdatedDto){

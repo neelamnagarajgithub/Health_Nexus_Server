@@ -4,6 +4,7 @@ import { UpdatedDto } from './dto';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 import { AppointmentsService } from 'src/appointments/appointments.service';
+import axios from 'axios';
 
 @Injectable()
 export class PatientsService {
@@ -26,22 +27,46 @@ export class PatientsService {
         return appointment;
     }
 
-    async MyEMRs(id:string){
-        const user=await await this.prisma.patient.findUnique({
+    async predicteddocs(id:string){
+        const user=await  this.prisma.patient.findUnique({
             where:{
                 id:id
             }
         })
+        console.log(user)
         if (!user) {
             throw new Error('User not found');
           }
-          const apiCallPromise = lastValueFrom(
-            this.httpService.get(`https://medivault-server.onrender.com/api/v1/user/${user.email}`)
-          );
-      
-        const response = await apiCallPromise;
-        const data = response.data;
-        return data;
+          try {
+            const response = await axios.get(`https://medivault-server.onrender.com/api/v1/user/${user.email}`);
+            const data = response.data; 
+            console.log('Data from medivault-server:', data);
+          
+            const response2 = await axios.post('https://healthnexus-model.onrender.com/predict', JSON.stringify(data), {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+          
+            const data2 = response2.data;
+            return data2;
+          } catch (error) {
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.error('Error response data:', error.response.data);
+              console.error('Error response status:', error.response.status);
+              console.error('Error response headers:', error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.error('Error request:', error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.error('Error message:', error.message);
+            }
+            console.error('Error config:', error.config);
+            throw new Error('An error occurred while making the API call');
+          }
     }
 
     async updatedetails(id:string,dto:UpdatedDto){
