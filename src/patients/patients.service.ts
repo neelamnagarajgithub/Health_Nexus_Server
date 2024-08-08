@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { UpdatedDto } from './dto';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
+import { AppointmentsService } from 'src/appointments/appointments.service';
 
 @Injectable()
 export class PatientsService {

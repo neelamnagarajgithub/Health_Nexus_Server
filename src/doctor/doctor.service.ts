@@ -11,15 +11,17 @@ export class DoctorService {
         }
     })
     return dto;
-}
+  }
+    async schedules(id:string){
+        const schedule=await this.prisma.appointment.findMany({
+            where:{
+                doctorId:id
+            }
+        })
+        return schedule;
+    }
 
-async schedules(id:string) {
-    return await this.prisma.appointment.findMany({
-        where:{
-            doctorId:id,
-        }
-    })
-} 
+
 
 
 }

@@ -1,6 +1,5 @@
 import { Injectable ,NotFoundException} from '@nestjs/common';
 import { AuthDto, LoginDto } from './dto';
-
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as argon2 from 'argon2';
 

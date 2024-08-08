@@ -14,6 +14,4 @@ export class DoctorController {
     getSchedules(@Param() param:any) {
         return this.docService.schedules(param.id);
     }
-
-    
 }

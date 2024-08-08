@@ -4,10 +4,11 @@ import { PatientsService } from './patients.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { PrismaClient } from '@prisma/client';
 import { HttpModule } from '@nestjs/axios';
+import { AppointmentsService } from 'src/appointments/appointments.service';
 
 @Module({
   imports: [PrismaModule,HttpModule],
   controllers: [PatientsController],
-  providers: [PatientsService, PrismaClient],
+  providers: [PatientsService, PrismaClient,AppointmentsService],
 })
 export class PatientsModule {}
