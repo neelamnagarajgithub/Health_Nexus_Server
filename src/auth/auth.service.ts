@@ -62,9 +62,10 @@ export class AuthService {
                     email:dto.email,
                 }
         })
-       if(c1!=null){return c1;}
-      else  if(c2!=null){return c2;}
-      else  if(c3!=null){return c3;}
+
+       if(c1!=null){return { ...c1, Role: 'doc' }}
+      else  if(c2!=null){return { ...c2, Role: 'pat' }}
+      else  if(c3!=null){return { ...c3, Role: 'hos' }}
       else{
         throw new NotFoundException('User not found');
       }
