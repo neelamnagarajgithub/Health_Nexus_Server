@@ -5,13 +5,11 @@ import { DoctorService } from './doctor.service';
 export class DoctorController {
     constructor(private docService:DoctorService) {}
 
-    @Get('myprofile/:id')
-    getprofile(@Param() param:any){
-        return this.docService.getprofile(param.id);
-    }
-
-    @Get("myschedules/:id")
-    getSchedules(@Param() param:any) {
-        return this.docService.schedules(param.id);
-    }
+    @Get(':id')
+    async getprofile(@Param() param:any){
+       const [profile,schedules]=await Promise.all ([this.docService.getprofile(param.id),
+        this.docService.schedules(param.id)]) 
+    
+    return {profile,schedules};
+       }
 }

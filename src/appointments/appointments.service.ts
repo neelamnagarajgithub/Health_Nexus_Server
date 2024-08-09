@@ -5,7 +5,7 @@ import { rescheduleDto } from './dto';
 
 @Injectable()
 export class AppointmentsService {
-  constructor(private readonly prisma:PrismaClient){}
+  constructor(private  prisma:PrismaClient){}
 
   async create(dto:AppointDto,id:string){
    const new_appointment=await this.prisma.appointment.create({
@@ -19,7 +19,9 @@ export class AppointmentsService {
     });
     return new_appointment;
   }
-
+  // async all_appointments(){
+  //   return await this.prisma.appointment.findMany();
+  // }
   async alldocs(){
     const alldoc=await this.prisma.doctor.findMany();
     return alldoc;

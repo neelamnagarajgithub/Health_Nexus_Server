@@ -53,6 +53,7 @@ export class PatientsService {
                     specilization:  data2.specialty
                 }
             })
+            console.log(data2)
             console.log("Doctors sent successfully");
             return resp;
           } catch (error) {
